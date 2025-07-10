@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-unsigned-mac:
-    runs-on: macos-14
+    runs-on: macos-14   # ARM64 (M1) runner
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
 
       - name: Build unsigned macOS ZIP
         run: |
-          # Tell electron-builder to skip code signing
+          # Skip code signing; produce a ZIP for ARM64
           npm run dist -- --mac --arm64 \
             --config.mac.identity=null \
             --config.mac.hardenedRuntime=false
