@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Electron + Playwright Demo</title>
+  </head>
+  <body style="margin:0; display:flex; flex-direction:column; height:100vh;">
+    <!-- Embedded browser -->
+    <webview
+      id="webview"
+      src="https://www.example.com"
+      style="flex:1; border:none;"
+    ></webview>
+
+    <!-- Button bar -->
+      <div style="padding:8px; background:#eee;">
+    <button id="run-btn">Run Playwright Demo</button>
+  </div>
+
+      <pre id="log" style="
+    margin:0;
+    padding:8px;
+    height:150px;
+    overflow:auto;
+    background:#111;
+    color:#0f0;
+    font-family:monospace;
+  "></pre>
+
+ <script>
+  const btn = document.getElementById('run-btn');
+  const log = document.getElementById('log');
+
+  // helper to append to log
+  function write(msg) {
+    log.textContent += msg + '\n';
+    log.scrollTop = log.scrollHeight;
+  }
+
+  // subscribe to steps
+  window.electronAPI.onStep(msg => write(msg));
+
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    log.textContent = '';         // clear old log
+    write('▶ Starting demo…');
+
+    try {
+      await window.electronAPI.runPlaywrightDemo();
+    } catch (err) {
+      write('❌ Error: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      write('── Finished ──');
+    }
+  });
+</script>
+  </body>
+</html>
