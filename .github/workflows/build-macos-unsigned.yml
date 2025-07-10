@@ -2,7 +2,7 @@ name: Build macOS (arm64, unsigned)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-unsigned-mac:
