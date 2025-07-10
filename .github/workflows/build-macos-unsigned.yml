@@ -20,6 +20,8 @@ jobs:
         run: npm ci
 
       - name: Build unsigned macOS ZIP
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Skip code signing; produce a ZIP for ARM64
           npm run dist -- --mac --arm64 \
