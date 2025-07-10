@@ -27,3 +27,9 @@ jobs:
           npm run dist -- --mac --arm64 \
             --config.mac.identity=null \
             --config.mac.hardenedRuntime=false
+        
+      - name: Upload unsigned macOS ZIP
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-arm64-unsigned
+          path: dist/*.zip
